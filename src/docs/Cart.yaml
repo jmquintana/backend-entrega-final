@@ -1,0 +1,317 @@
+tags:
+  - name: Carts
+    description: Endpoints para manejar los carritos de compras
+paths:
+  /api/carts:
+    get:
+      summary: Obtiene todos los carritos
+      tags:
+        - Carts
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: Número de página
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: Cantidad de carritos por página
+        - in: query
+          name: id
+          schema:
+            type: ObjectID
+          description: ID del carrito
+        - in: query
+          name: user
+          schema:
+            type: ObjectID
+          description: ID del usuario
+        - in: query
+          name: products
+          schema:
+            type: array
+          description: Array de productos
+        - in: query
+          name: total
+          schema:
+            type: number
+          description: Total del carrito
+        - in: query
+          name: status
+          schema:
+            type: string
+          description: Estado del carrito
+      responses:
+        200:
+          description: Carritos obtenidos exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  carts:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Cart"
+                  totalPages:
+                    type: integer
+                  currentPage:
+                    type: integer
+                  totalItems:
+                    type: integer
+        400:
+          description: No se pudo obtener los carritos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: No se pudo obtener los carritos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Error al obtener los carritos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Crea un carrito
+      tags:
+        - Carts
+      requestBody:
+        description: Carrito a crear
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Cart"
+      responses:
+        201:
+          description: Carrito creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        303:
+          description: Carrito creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        400:
+          description: No se pudo crear el carrito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: No se pudo crear el carrito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Error al crear el carrito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/carts/{id}: # path
+    get:
+      summary: Obtiene un carrito por ID
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: ObjectID
+          description: ID del carrito
+      responses:
+        200:
+          description: Carrito obtenido exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        400:
+          description: No se pudo obtener el carrito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: No se pudo obtener el carrito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Error al obtener el carrito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Actualiza un carrito por ID
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: ObjectID
+          description: ID del carrito
+      requestBody:
+        description: Carrito a actualizar
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Cart"
+      responses:
+        200:
+          description: Carrito actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        400:
+          description: No se pudo actualizar el carrito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: No se pudo actualizar el carrito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Error al actualizar el carrito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Elimina un carrito por ID
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: ObjectID
+          description: ID del carrito
+      responses:
+        200:
+          description: Carrito eliminado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        400:
+          description: No se pudo eliminar el carrito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: No se pudo eliminar el carrito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Error al eliminar el carrito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/carts/{id}/product/{pid}:
+    post:
+      summary: Agrega un producto a un carrito por ID
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: ObjectID
+          description: ID del carrito
+      requestBody:
+        description: Producto a agregar
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductInCart"
+      responses:
+        200:
+          description: Producto agregado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductInCart"
+        400:
+          description: No se pudo agregar el producto al carrito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: No se pudo agregar el producto al carrito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Error al agregar el producto al carrito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    /api/carts/{cid}/allProducts/{pid}:
+      delete:
+        summary: Elimina todos las unidades de un producto por id en un carrito determinado
+        tags:
+          - Carts
+        parameters:
+          - in: path
+            name: cid
+            schema:
+              type: ObjectID
+            description: ID del carrito
+          - in: path
+            name: pid
+            schema:
+              type: ObjectID
+            description: ID del producto
+        responses:
+          200:
+            description: Producto eliminado exitosamente
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ProductInCart"
+          400:
+            description: No se pudo eliminar el producto del carrito
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+          401:
+            description: No se pudo eliminar el producto del carrito
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+          500:
+            description: Error al eliminar el producto del carrito
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"

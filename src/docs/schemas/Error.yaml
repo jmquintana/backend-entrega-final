@@ -1,0 +1,19 @@
+# Error.yaml schema example:
+
+components:
+  schemas:
+    Error:
+      type: Object
+      properties:
+        message:
+          type: string
+          description: Mensaje de error
+        internal_code:
+          type: string
+          description: Código de error
+      required:
+        - message
+        - internal_code
+      example:
+        message: "Error message"
+        internal_code: "INTERNAL_CODE"

@@ -1,0 +1,42 @@
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: ObjectID
+          description: ID del producto
+        title:
+          type: string
+          description: Nombre del producto
+        description:
+          type: string
+          description: Descripción del producto
+        price:
+          type: number
+          description: Precio del producto
+        stock:
+          type: integer
+          description: Stock del producto
+        code:
+          type: string
+          description: Código del producto
+        thumbnails:
+          type: array
+          description: Imágenes del producto
+        category:
+          type: string
+          description: Categoría del producto
+        status:
+          type: boolean
+          description: Determina si el producto tiene unidades en el stock
+      example:
+        id: 5f9c7b7b9d9b4b1b3c4b1b9d
+        title: "Manzana 'Moño Azul'"
+        description: "Manzana de la mejor calidad"
+        price: 100
+        stock: 10
+        code: "ABC1234"
+        thumbnails: []
+        category: "Frutas"
+        status: true

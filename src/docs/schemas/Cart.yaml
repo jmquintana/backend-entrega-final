@@ -1,0 +1,14 @@
+components:
+  schemas:
+    Cart:
+      type: Object
+      properties:
+        id:
+          type: ObjectID
+          description: ID del carrito
+        products:
+          type: array
+          description: Array de productos
+      example:
+        id: 5f9c7b7b9d9b4b1b3c4b1b9d
+        products: []
