@@ -75,13 +75,26 @@ export default class UsersRepository {
 
 	deleteInactiveUsers = async () => {
 		try {
+			const limitTime = 2 * 60 * 1000; //10 minutes in milliseconds
+
+			const inactiveUsers = await usersModel
+				.find({
+					last_connection: { $lt: new Date(Date.now() - limitTime) },
+				})
+				.lean();
+
 			const deletedUsers = await usersModel.deleteMany({
-				last_connection: { $lt: new Date(Date.now() - 30 * 60000) },
+				last_connection: { $lt: new Date(Date.now() - limitTime) },
 			});
 
-			console.log({ deletedUsers });
+			const response = {
+				deletedUsers,
+				inactiveUsers,
+			};
 
-			return deletedUsers;
+			console.log({ response });
+
+			return response;
 		} catch (error) {
 			console.log(error);
 			return error;

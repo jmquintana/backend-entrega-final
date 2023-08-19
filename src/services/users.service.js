@@ -143,7 +143,8 @@ export default class UserService {
 
 	deleteInactiveUsers = async () => {
 		try {
-			const users = await usersRepository.deleteInactiveUsers();
+			const response = await usersRepository.deleteInactiveUsers();
+			const users = response.inactiveUsers;
 
 			users.forEach(async (user) => {
 				const { email, first_name } = user;
@@ -157,8 +158,7 @@ export default class UserService {
 
 			return users;
 		} catch (error) {
-			console.log();
-			return null;
+			return error;
 		}
 	};
 }

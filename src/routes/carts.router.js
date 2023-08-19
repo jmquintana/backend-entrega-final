@@ -10,13 +10,22 @@ import {
 	deleteCart,
 	handlePurchase,
 } from "../controllers/carts.controller.js";
-import { checkAdmin, checkUser, checkSession } from "../middlewares/auth.js";
-import { passportCall, handlePolicies } from "../middlewares/authorization.js";
+import { checkSession } from "../middlewares/auth.js";
+import {
+	passportCall,
+	handlePolicies,
+	checkRoles,
+} from "../middlewares/authorization.js";
 
 const cartsRouter = Router();
 
 cartsRouter.post("/", addCart);
-cartsRouter.get("/", passportCall("jwt"), handlePolicies(["admin"]), getCarts);
+cartsRouter.get(
+	"/",
+	passportCall("jwt"),
+	(req, res, next) => checkRoles(req, res, next, ["admin"]),
+	getCarts
+);
 cartsRouter.get("/:cid", checkSession, getCartById);
 cartsRouter.post(
 	"/:cid/product/:pid",

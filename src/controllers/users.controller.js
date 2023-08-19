@@ -169,8 +169,14 @@ export const deleteUser = async (req, res) => {
 export const deleteInactiveUsers = async (req, res) => {
 	try {
 		const users = await usersService.deleteInactiveUsers();
-		return res.send(users);
+		return res.send({
+			status: "Success",
+			message: "Inactive users deleted",
+			payload: users,
+		});
 	} catch (error) {
-		console.log(error);
+		return res
+			.status(500)
+			.send({ status: "Error", error: "Failed to delete inactive users" });
 	}
 };

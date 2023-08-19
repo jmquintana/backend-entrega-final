@@ -43,7 +43,7 @@ export const emailTemplates = {
             </table>
         </html>`,
 
-	accountDeletedEmail: (email, first_name) => `
+	accountDeletedEmail: (first_name) => `
     <!DOCTYPE html>
     <html>
         <head>
@@ -65,15 +65,14 @@ export const emailTemplates = {
                             <tr>
                                 <td style="padding: 20px 20px;">
                                     <p style="margin: 0;">
-                                        We are sending you this email to inform you that your account has been deleted.
+                                        Your account has been deleted because you have been inactive too much time!
                                     </p>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 20px 20px;">
                                     <p style="margin: 0;">
-                                        If you did not delete your account, please contact us at <a href="mailto:
-                                        We are sorry to see you go. Your account has been deleted and all your data is gone forever!
+                                        If you did not request a password reset, no further action is required.
                                     </p>
                                 </td>
                             </tr>
