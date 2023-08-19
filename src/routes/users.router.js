@@ -13,6 +13,8 @@ import {
 	deleteInactiveUsers,
 } from "../controllers/users.controller.js";
 
+import { checkRoles } from "../middlewares/authorization.js";
+
 const usersRouter = Router();
 
 usersRouter.post(
@@ -45,6 +47,7 @@ usersRouter.put("/resetPassword", updatePassword);
 usersRouter.get(
 	"/",
 	passport.authenticate("jwt", { session: false }),
+	(req, res, next) => checkRoles(req, res, next, ["admin"]),
 	getUsers
 );
 
@@ -52,10 +55,16 @@ usersRouter.get(
 usersRouter.delete(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),
+	(req, res, next) => checkRoles(req, res, next, ["admin"]),
 	deleteUser
 );
 
 // endpoint that delete all user have been logged out in the last 30 minutes
-usersRouter.delete("/", deleteInactiveUsers);
+usersRouter.delete(
+	"/",
+	passport.authenticate("jwt", { session: false }),
+	(req, res, next) => checkRoles(req, res, next, ["admin"]),
+	deleteInactiveUsers
+);
 
 export default usersRouter;

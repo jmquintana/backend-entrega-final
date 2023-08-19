@@ -15,6 +15,7 @@ function checkSession(req, res, next) {
 
 function checkAdmin(req, res, next) {
 	const isAdmin = req.user?.isAdmin || false;
+
 	if (isAdmin) {
 		next();
 	} else {

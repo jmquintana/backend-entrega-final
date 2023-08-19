@@ -13,6 +13,7 @@ export default class UsersRepository {
 						last_name: 1,
 						email: 1,
 						role: 1,
+						last_connection: 1,
 					}
 				)
 				.lean();
@@ -75,8 +76,11 @@ export default class UsersRepository {
 	deleteInactiveUsers = async () => {
 		try {
 			const deletedUsers = await usersModel.deleteMany({
-				last_login: { $lt: new Date(Date.now() - 30 * 60000) },
+				last_connection: { $lt: new Date(Date.now() - 30 * 60000) },
 			});
+
+			console.log({ deletedUsers });
+
 			return deletedUsers;
 		} catch (error) {
 			console.log(error);

@@ -65,3 +65,25 @@ export const validateTokenJwt = async (req, res, next) => {
 		});
 	}
 };
+
+export const checkRoles = (req, res, next, roles) => {
+	const token = req.cookies.jwtcookie;
+
+	if (!token) {
+		return res.status(401).send({
+			status: "Error",
+			message: "No token provided!",
+		});
+	}
+
+	const { role } = jwt.verify(token, secret);
+
+	if (roles.includes(role)) {
+		next();
+	} else {
+		return res.status(403).send({
+			status: "Error",
+			message: "You are not authorized!",
+		});
+	}
+};
