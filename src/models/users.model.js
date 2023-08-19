@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "carts",
 	},
+	last_connection: Date,
 });
 
 userSchema.pre("findOne", function () {

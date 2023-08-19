@@ -8,6 +8,9 @@ import {
 	login,
 	logout,
 	register,
+	getUsers,
+	deleteUser,
+	deleteInactiveUsers,
 } from "../controllers/users.controller.js";
 
 const usersRouter = Router();
@@ -38,5 +41,21 @@ usersRouter.get(
 usersRouter.post("/logout", logout);
 usersRouter.post("/restore", restorePasswordProcess);
 usersRouter.put("/resetPassword", updatePassword);
+
+usersRouter.get(
+	"/",
+	passport.authenticate("jwt", { session: false }),
+	getUsers
+);
+
+// endpoint for deleting an specific user
+usersRouter.delete(
+	"/:id",
+	passport.authenticate("jwt", { session: false }),
+	deleteUser
+);
+
+// endpoint that delete all user have been logged out in the last 30 minutes
+usersRouter.delete("/", deleteInactiveUsers);
 
 export default usersRouter;

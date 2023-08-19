@@ -5,7 +5,17 @@ export default class UsersRepository {
 	constructor() {}
 	getUsers = async () => {
 		try {
-			const users = await usersModel.find();
+			const users = await usersModel
+				.find(
+					{},
+					{
+						first_name: 1,
+						last_name: 1,
+						email: 1,
+						role: 1,
+					}
+				)
+				.lean();
 			return users;
 		} catch (error) {
 			console.log(error);
@@ -56,6 +66,18 @@ export default class UsersRepository {
 				_id: new ObjectId(userId),
 			});
 			return deletedUser;
+		} catch (error) {
+			console.log(error);
+			return error;
+		}
+	};
+
+	deleteInactiveUsers = async () => {
+		try {
+			const deletedUsers = await usersModel.deleteMany({
+				last_login: { $lt: new Date(Date.now() - 30 * 60000) },
+			});
+			return deletedUsers;
 		} catch (error) {
 			console.log(error);
 			return error;

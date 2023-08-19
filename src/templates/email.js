@@ -42,4 +42,46 @@ export const emailTemplates = {
                 </tr>
             </table>
         </html>`,
+
+	accountDeletedEmail: (email, first_name) => `
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <title>Reset Password</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </head>
+        <body style="background-color: #f6f6f6; font-family: sans-serif; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
+            <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                <tr>
+                    <td style="background-color: #f6f6f6; text-align: center;">
+                        <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-spacing: 0; width: 100%; background-color: #fff; max-width: 600px; margin: 0 auto;">
+                            <tr>
+                                <td style="padding: 20px 20px; text-align: center;">
+                                    <h1 style="font-size: 24px; margin: 0;">Hello, ${first_name}!</h1>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 20px 20px;">
+                                    <p style="margin: 0;">
+                                        We are sending you this email to inform you that your account has been deleted.
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 20px 20px;">
+                                    <p style="margin: 0;">
+                                        If you did not delete your account, please contact us at <a href="mailto:
+                                        We are sorry to see you go. Your account has been deleted and all your data is gone forever!
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </body>
+    </html>
+    `,
 };

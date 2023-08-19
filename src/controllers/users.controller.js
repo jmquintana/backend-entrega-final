@@ -42,7 +42,7 @@ export const login = async (req, res) => {
 		const cartCount =
 			user.role === "admin"
 				? 0
-				: await cartsService.getCartCount(user.cart._id);
+				: await cartsService.getCartCount(user.cart?._id);
 
 		const jwtUser = {
 			first_name: user.first_name,
@@ -55,6 +55,8 @@ export const login = async (req, res) => {
 			cartCount,
 		};
 		const token = jwt.sign(jwtUser, secret, { expiresIn: "24h" });
+
+		const last_connection = usersService.updateLastConnectionDate(email);
 
 		return res.cookie(cookieName, token, { httpOnly: true }).send({
 			status: "Success",
@@ -142,5 +144,33 @@ export const updatePassword = async (req, res) => {
 	} catch (error) {
 		req.logger.error(`Failed to restore user password: ${error}`);
 		return res.status(500).send({ status: "error", error: `${error}` });
+	}
+};
+
+export const getUsers = async (req, res) => {
+	try {
+		const users = await usersService.getUsers();
+		return res.send(users);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+export const deleteUser = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const user = await usersService.deleteUser(id);
+		return res.send(user);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+export const deleteInactiveUsers = async (req, res) => {
+	try {
+		const users = await usersService.deleteInactiveUsers();
+		return res.send(users);
+	} catch (error) {
+		console.log(error);
 	}
 };

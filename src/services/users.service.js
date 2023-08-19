@@ -102,4 +102,63 @@ export default class UserService {
 			throw error;
 		}
 	};
+
+	updateLastConnectionDate = async (email) => {
+		try {
+			const user = await usersRepository.getUser({ email });
+			if (!user) throw new Error(`Something went wrong`);
+
+			const lastConnectionUpdate = await usersRepository.updateUser(email, {
+				last_connection: Date.now(),
+			});
+			if (!lastConnectionUpdate)
+				throw new Error(`Last connection update failed for ${email}`);
+
+			return lastConnectionUpdate;
+		} catch (error) {
+			console.log(`Failed to update last connection date: ${error}`);
+			throw error;
+		}
+	};
+
+	getUsers = async () => {
+		try {
+			const users = await usersRepository.getUsers();
+			return users;
+		} catch (error) {
+			console.log();
+			return null;
+		}
+	};
+
+	deleteUser = async (id) => {
+		try {
+			const users = await usersRepository.deleteUser(id);
+			return users;
+		} catch (error) {
+			console.log();
+			return null;
+		}
+	};
+
+	deleteInactiveUsers = async () => {
+		try {
+			const users = await usersRepository.deleteInactiveUsers();
+
+			users.forEach(async (user) => {
+				const { email, first_name } = user;
+				const mail = {
+					to: email,
+					subject: `Your account has been deleted, ${first_name}!`,
+					html: emailTemplates.accountDeletedEmail(first_name),
+				};
+				await this.mailingService.sendEmail(mail);
+			});
+
+			return users;
+		} catch (error) {
+			console.log();
+			return null;
+		}
+	};
 }
