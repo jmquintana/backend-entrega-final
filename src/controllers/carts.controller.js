@@ -20,10 +20,9 @@ export async function renderCarts(req, res) {
 	try {
 		const result = {};
 		const user = req.user;
-		result.user.isAdmin = req.user.role === "admin" ? true : false;
 		result.carts = await cartsService.getCarts();
 		result.user = user;
-		console.log({ result });
+		result.user.isAdmin = req.user.role === "admin" ? true : false;
 		return res.render("carts", result);
 	} catch (error) {
 		return res.send({
