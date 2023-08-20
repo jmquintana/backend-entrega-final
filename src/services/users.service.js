@@ -126,7 +126,7 @@ export default class UserService {
 			const users = await usersRepository.getUsers();
 			return users;
 		} catch (error) {
-			console.log();
+			console.log(error);
 			return null;
 		}
 	};

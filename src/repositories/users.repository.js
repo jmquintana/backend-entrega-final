@@ -9,11 +9,7 @@ export default class UsersRepository {
 				.find(
 					{},
 					{
-						first_name: 1,
-						last_name: 1,
-						email: 1,
-						role: 1,
-						last_connection: 1,
+						password: 0,
 					}
 				)
 				.lean();

@@ -5,8 +5,8 @@
 	<div class="cart-main-container">
 		<div class="list-header">
 			<div class="list-title">
-				<a href="/">Productos </a>
-				/ Carritos
+				<a href="/">Products </a>
+				/ Users
 			</div>
 			<div class="profile-header">
 				<div class="greeting-container">
@@ -103,63 +103,31 @@
 		</div>
 		<div class="list-container">
 			<div class="cart-products-container">
-				{{#each carts}}
+				{{#each users}}
 					<div class="product-card" id={{this._id}}>
 						<div class="product-card-header">
 							<div class="product-card-details">
-								Cart ID:
+								User ID:
 								{{this._id}}
 							</div>
 						</div>
-						<div class="product-list">
-							{{#each this.products}}
-								<div class="product">
-									<div class="product-title">
-										{{this.product.title}}
-									</div>
-									<div class="product-quantity">
-										{{this.quantity}}
-									</div>
-								</div>
-							{{else}}
-								<div class="no-image">Sin productos</div>
-							{{/each}}
-						</div>
-						<div class="product-card-body">
-						</div>
-						<div class="product-card-footer">
-							<div class="product-card-total"></div>
-						</div>
-					</div>
-				{{else}}
-					<div class="no-products">No se encontraron carritos.</div>
-				{{/each}}
-			</div>
-			<div class="footer">
-				{{#if products}}
-					<div class="cart-total-price-container">
-						<div class="cart-total-price-label"> Total:</div>
-						<div class="cart-total-price">
-							$&nbsp;<div class="cart-total-price-value">
-								{{formatNumber totalPrice}}
+						<div class="user-data">
+							<div class="user-data-item">
+								<div class="user-data-title">First Name:</div>
+								<div class="user-data-value">{{this.first_name}}</div>
+							</div>
+							<div class="user-data-item">
+								<div class="user-data-title">Last Name:</div>
+								<div class="user-data-value">{{this.last_name}}</div>
+							</div>
+							<div class="user-data-item">
+								<div class="user-data-title">Email:</div>
+								<div class="user-data-value">{{this.email}}</div>
 							</div>
 						</div>
 					</div>
-					<div class="purchase-buttons">
-						<div class="cancel-btn">
-							<a href="/" class="btn btn-dark-blue large-btn">
-								<i class="fas fa-arrow-left"></i>
-								&nbsp;Volver
-							</a>
-						</div>
-						<div class="purchase-btn btn large-btn add-btn">
-							<i class="fas fa-credit-card"></i>
-							&nbsp;Finalizar
-						</div>
-					</div>
-				{{/if}}
+				{{/each}}
 			</div>
 		</div>
 	</div>
 </div>
-<script src="/js/carts.js"></script>

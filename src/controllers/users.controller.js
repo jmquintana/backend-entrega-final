@@ -180,3 +180,20 @@ export const deleteInactiveUsers = async (req, res) => {
 			.send({ status: "Error", error: "Failed to delete inactive users" });
 	}
 };
+
+export const renderUsers = async (req, res) => {
+	try {
+		const result = {};
+		result.user = req.user;
+		result.user.isAdmin = req.user.role === "admin" ? true : false;
+		const users = await usersService.getUsers();
+		result.users = users;
+		console.log({ result });
+		return res.render("users", result);
+	} catch (error) {
+		return res.send({
+			status: "Error",
+			error: "Something went wrong while rendering users",
+		});
+	}
+};

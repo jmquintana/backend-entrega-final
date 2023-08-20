@@ -81,6 +81,17 @@
 	max-width: 55%;
 }
 
+.user-data {
+	margin: 1rem;
+	max-width: 100%;
+}
+
+.user-data-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
 .product-card-title {
 	color: #eee;
 	font-weight: 700;

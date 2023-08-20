@@ -15,10 +15,12 @@ import {
 	editProductQuantity,
 	renderCarts,
 } from "../controllers/carts.controller.js";
+import { renderUsers } from "../controllers/users.controller.js";
 import {
 	passportCall,
 	handlePolicies,
 	validateTokenJwt,
+	checkRoles,
 } from "../middlewares/authorization.js";
 
 const viewsRouter = Router();
@@ -28,7 +30,7 @@ viewsRouter.get("/", passportCall("jwt"), renderPaginatedProducts);
 viewsRouter.get(
 	"/carts",
 	passportCall("jwt"),
-	handlePolicies(["admin"]),
+	(req, res, next) => checkRoles(req, res, next, ["admin"]),
 	renderCarts
 );
 viewsRouter.get("/product/:pid", passportCall("jwt"), renderProduct);
@@ -50,5 +52,11 @@ viewsRouter.get("/restore", (req, res) => {
 viewsRouter.get("/reset", validateTokenJwt, (req, res) => {
 	res.render("reset");
 });
+viewsRouter.get(
+	"/users",
+	passportCall("jwt"),
+	(req, res, next) => checkRoles(req, res, next, ["admin"]),
+	renderUsers
+);
 
 export default viewsRouter;

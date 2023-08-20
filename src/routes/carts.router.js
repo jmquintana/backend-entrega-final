@@ -22,7 +22,7 @@ const cartsRouter = Router();
 cartsRouter.post("/", addCart);
 cartsRouter.get(
 	"/",
-	passportCall("jwt"),
+	// passportCall("jwt"),
 	(req, res, next) => checkRoles(req, res, next, ["admin"]),
 	getCarts
 );
