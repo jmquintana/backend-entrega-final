@@ -82,14 +82,21 @@
 }
 
 .user-data {
-	margin: 1rem;
-	max-width: 100%;
+	padding: 1rem;
+	width: 100%;
+	background: #fff;
+}
+
+.user-data-title {
+	font-weight: 500;
+	color: #000;
 }
 
 .user-data-item {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	height: 2rem;
 }
 
 .product-card-title {
@@ -122,6 +129,14 @@
 	align-items: normal;
 	padding: 1rem;
 	/* min-height: 10rem; */
+}
+
+.user-card-body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem;
 }
 
 .product-card-description {
