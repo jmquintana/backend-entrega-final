@@ -61,7 +61,11 @@ app.use("/", express.static(`${__dirname}/public`));
 app.use(addLogger);
 
 // Database connection
-database.connect();
+database.connect().then(() => {
+	app.listen(PORT, (req, res) => {
+		console.log(`Server listening on port ${PORT}`);
+	});
+});
 
 // Routes
 routerAPI(app);
@@ -75,10 +79,3 @@ app.get("/loggerTest", (req, res) => {
 
 	res.send("Logger test completed");
 });
-
-const httpServer = app.listen(PORT, (req, res) => {
-	console.log(`Server listening on port ${PORT}`);
-});
-
-// Websocket Server
-socket.connect(httpServer);
