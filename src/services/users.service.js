@@ -162,12 +162,15 @@ export default class UserService {
 		}
 	};
 
-	updateUserRole = async (id, user) => {
+	updateUserRole = async (id, role) => {
 		try {
-			const response = await usersRepository.updateUserRole(id, user);
+			const response = await usersRepository.updateUserRole(id, role);
+			console.log({
+				response,
+			});
 			return response;
 		} catch (error) {
-			console.log();
+			console.log(error);
 			return null;
 		}
 	};

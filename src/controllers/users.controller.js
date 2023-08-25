@@ -202,9 +202,25 @@ export const updateUserRole = async (req, res) => {
 	try {
 		const { id } = req.params;
 		const { role } = req.body;
+
+		console.log({
+			id,
+			role,
+		});
+
 		const user = await usersService.updateUserRole(id, role);
-		return res.send(user);
+		return res.send({
+			ok: true,
+			status: "Success",
+			message: "User role updated",
+			payload: user,
+		});
 	} catch (error) {
-		console.log(error);
+		return res.status(500).send({
+			ok: false,
+			status: "Error",
+			message: "Failed to update user role",
+			error: `${error}`,
+		});
 	}
 };

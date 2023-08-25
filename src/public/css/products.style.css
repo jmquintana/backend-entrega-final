@@ -605,6 +605,12 @@ img,
 	filter: brightness(90%);
 }
 
+.submit.disabled {
+	color: #999 !important;
+	pointer-events: none;
+	cursor: default;
+}
+
 .overlay {
 	z-index: 1;
 	position: fixed;

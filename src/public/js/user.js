@@ -5,6 +5,9 @@ const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const editRoleButton = document.querySelector(".edit-role-btn");
 const roleSelector = document.querySelector("#role");
+const saveButton = document.querySelector(".btn.submit");
+
+let globalRole = null;
 
 const openModal = async () => {
 	form.classList.remove("hidden");
@@ -19,6 +22,7 @@ const openModal = async () => {
 	form.classList.add("animate__fadeInDown");
 	modal.classList.add("animate__fadeIn");
 	overlay.classList.add("animate__fadeIn");
+	saveButton.classList.add("disabled");
 };
 
 const closeModal = () => {
@@ -35,8 +39,8 @@ const closeModal = () => {
 
 openModalButtons.forEach((btn) =>
 	btn.addEventListener("click", async (e) => {
-		let role = e.target.parentNode.innerText.replace(/\s/g, "");
-		roleSelector.value = role;
+		globalRole = e.target.parentNode.innerText.replace(/\s/g, "");
+		roleSelector.value = globalRole;
 		// get user id from 4*parentNode
 		let id = e.target.parentNode.parentNode.parentNode.parentNode.id;
 		form.id = id;
@@ -47,17 +51,13 @@ openModalButtons.forEach((btn) =>
 overlay.addEventListener("click", closeModal);
 editRoleButton.addEventListener("click", closeModal);
 
-// fetch patch "api/user/:id" the role
-// if success, close modal
-// if error, show alert
-
 const handleEdit = async (e) => {
 	e.preventDefault();
 	e.stopPropagation();
 	const myFormData = new FormData(e.target);
 	const role = myFormData.get("role");
 	const id = form.id;
-	const resp = await fetch(`/api/user/${id}`, {
+	const resp = await fetch(`/api/users/${id}`, {
 		method: "PATCH",
 		body: JSON.stringify({ role }),
 		headers: {
@@ -66,11 +66,24 @@ const handleEdit = async (e) => {
 	});
 	const data = await resp.json();
 	if (data.ok) {
-		showAlert(data.message, "success");
 		closeModal();
+		showAlert(data.message, "success");
+		setTimeout(() => {
+			location.reload();
+		}, 1500);
 	} else {
 		showAlert(data.message, "error");
 	}
 };
 
 form.addEventListener("submit", handleEdit);
+
+// onchange event of roleSelector if selected is not globalRole
+// toggle "disabled" class of saveButton
+roleSelector.addEventListener("change", (e) => {
+	if (e.target.value !== globalRole) {
+		saveButton.classList.remove("disabled");
+	} else {
+		saveButton.classList.add("disabled");
+	}
+});

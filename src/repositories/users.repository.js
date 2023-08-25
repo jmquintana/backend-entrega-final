@@ -97,11 +97,11 @@ export default class UsersRepository {
 		}
 	};
 
-	updateUserRole = async (id, user) => {
+	updateUserRole = async (id, role) => {
 		try {
 			const response = await usersModel.updateOne(
 				{ _id: new ObjectId(id) },
-				user
+				{ role }
 			);
 			return response;
 		} catch (error) {
