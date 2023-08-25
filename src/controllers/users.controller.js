@@ -160,9 +160,19 @@ export const deleteUser = async (req, res) => {
 	try {
 		const { id } = req.params;
 		const user = await usersService.deleteUser(id);
-		return res.send(user);
+		return res.status(200).send({
+			ok: true,
+			status: "Success",
+			message: "User deleted",
+			payload: user,
+		});
 	} catch (error) {
-		console.log(error);
+		return res.status(500).send({
+			ok: false,
+			status: "Error",
+			message: "Failed to delete user",
+			error: `${error}`,
+		});
 	}
 };
 
@@ -188,7 +198,6 @@ export const renderUsers = async (req, res) => {
 		result.user.isAdmin = req.user.role === "admin" ? true : false;
 		const users = await usersService.getUsers();
 		result.users = users;
-		console.log({ result });
 		return res.render("users", result);
 	} catch (error) {
 		return res.send({

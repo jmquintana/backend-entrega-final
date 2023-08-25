@@ -6,6 +6,8 @@ const overlay = document.querySelector(".overlay");
 const editRoleButton = document.querySelector(".edit-role-btn");
 const roleSelector = document.querySelector("#role");
 const saveButton = document.querySelector(".btn.submit");
+const logOutBtn = document.querySelector(".profile-logout");
+const deleteUserButtons = document.querySelectorAll(".delete-btn");
 
 let globalRole = null;
 
@@ -57,22 +59,28 @@ const handleEdit = async (e) => {
 	const myFormData = new FormData(e.target);
 	const role = myFormData.get("role");
 	const id = form.id;
-	const resp = await fetch(`/api/users/${id}`, {
-		method: "PATCH",
-		body: JSON.stringify({ role }),
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
-	const data = await resp.json();
-	if (data.ok) {
-		closeModal();
-		showAlert(data.message, "success");
-		setTimeout(() => {
-			location.reload();
-		}, 1500);
-	} else {
-		showAlert(data.message, "error");
+	try {
+		await fetch(`/api/users/${id}`, {
+			method: "PATCH",
+			body: JSON.stringify({ role }),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.ok) {
+					closeModal();
+					showAlert(data.message, "success");
+					setTimeout(() => {
+						location.reload();
+					}, 1500);
+				} else {
+					showAlert(data.message, "error");
+				}
+			});
+	} catch (error) {
+		console.error(error);
 	}
 };
 
@@ -87,3 +95,54 @@ roleSelector.addEventListener("change", (e) => {
 		saveButton.classList.add("disabled");
 	}
 });
+
+logOutBtn.addEventListener("click", async (e) => {
+	e.preventDefault();
+	const email = logOutBtn.id;
+	console.log(email);
+	try {
+		await fetch("/api/users/logout", {
+			method: "POST",
+			body: JSON.stringify({ username: email }),
+			header: {
+				"Content-Type": "application/json",
+			},
+		}).then((res) => {
+			if (res.status === 200) {
+				window.location.href = "/login";
+			} else {
+				const error = new Error(res.error);
+				throw error;
+			}
+		});
+	} catch (error) {
+		console.error(error);
+	}
+});
+
+deleteUserButtons.forEach((btn) =>
+	btn.addEventListener("click", async (e) => {
+		e.preventDefault();
+		const id = btn.id;
+		try {
+			await fetch(`/api/users/${id}`, {
+				method: "DELETE",
+				header: {
+					"Content-Type": "application/json",
+				},
+			}).then((res) => {
+				if (res.ok) {
+					showAlert(res.message, "success");
+					setTimeout(() => {
+						location.reload();
+					}, 1500);
+				} else {
+					const error = new Error(res.error);
+					throw error;
+				}
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	})
+);
