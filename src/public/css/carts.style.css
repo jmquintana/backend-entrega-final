@@ -87,6 +87,41 @@ body::-webkit-scrollbar {
 	width: 100%;
 }
 
+.width-md {
+	width: 20rem;
+}
+
+.selector-control {
+	background-color: #303245;
+	border-radius: 12px;
+	border: 0;
+	box-sizing: border-box;
+	color: #eee;
+	font-size: 1rem;
+	height: 100%;
+	outline: 0;
+	padding: 4px 20px;
+	width: 100%;
+	color: var(--D-color);
+}
+
+.selector-control:hover {
+	filter: brightness(120%);
+}
+
+.btn.submit {
+	margin-left: 0;
+}
+
+.cut {
+	transform: translateY(8px);
+}
+
+.placeholder {
+	transform: translateY(-25px) translateX(10px) scale(0.75);
+	color: var(--E-color);
+}
+
 .product-card-details {
 	display: flex;
 	justify-content: normal;

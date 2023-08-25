@@ -11,6 +11,7 @@ import {
 	getUsers,
 	deleteUser,
 	deleteInactiveUsers,
+	updateUserRole,
 } from "../controllers/users.controller.js";
 
 import { checkRoles } from "../middlewares/authorization.js";
@@ -65,6 +66,14 @@ usersRouter.delete(
 	passport.authenticate("jwt", { session: false }),
 	(req, res, next) => checkRoles(req, res, next, ["admin"]),
 	deleteInactiveUsers
+);
+
+// endpoint for updating part of a user object with patch
+usersRouter.patch(
+	"/:id",
+	passport.authenticate("jwt", { session: false }),
+	(req, res, next) => checkRoles(req, res, next, ["admin"]),
+	updateUserRole
 );
 
 export default usersRouter;

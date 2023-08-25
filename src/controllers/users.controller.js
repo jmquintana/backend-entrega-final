@@ -197,3 +197,14 @@ export const renderUsers = async (req, res) => {
 		});
 	}
 };
+
+export const updateUserRole = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const { role } = req.body;
+		const user = await usersService.updateUserRole(id, role);
+		return res.send(user);
+	} catch (error) {
+		console.log(error);
+	}
+};

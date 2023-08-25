@@ -96,4 +96,17 @@ export default class UsersRepository {
 			return error;
 		}
 	};
+
+	updateUserRole = async (id, user) => {
+		try {
+			const response = await usersModel.updateOne(
+				{ _id: new ObjectId(id) },
+				user
+			);
+			return response;
+		} catch (error) {
+			console.log(error);
+			return error;
+		}
+	};
 }

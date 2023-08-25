@@ -7,27 +7,28 @@
 		<form
 			action="/api/user/:uid"
 			id="userRoleEdit"
-			class="form hidden animate__animated animate__faster"
-			method="POST"
+			class="form hidden animate__animated animate__faster width-md"
+			method="PATCH"
 			enctype="multipart/form-data"
 		>
-			<div class="form-title">Editar rol de usuario</div>
-			<div class="form-group">
-				<label for="role">Rol</label>
-				<select class="form-control" id="role" name="role">
+			<div class="form-title">Editar rol</div>
+			<div class="subtitle">Modifica el rol del usuario</div>
+			<div class="input-container ic1">
+				<div class="cut cut-short"></div>
+				<label for="uid" class="placeholder">Rol</label>
+				<select class="form-control selector-control" id="role" name="role">
 					<option value="user">user</option>
 					<option value="admin">admin</option>
 				</select>
 			</div>
-			{{! save button }}
-			<div class="btn-container">
-				<button type="submit" class="btn btn-save">
-					<i class="fas fa-save"></i>
-					<span>Guardar</span>
-				</button>
-			</div>
+			<button type="submit" class="btn submit edit-role-btn">
+				<i class="fas fa-save"></i>
+				&nbsp;
+				<span>Guardar</span>
+			</button>
 		</form>
 	</div>
+	<div class="overlay hidden animate__animated animate__faster"></div>
 	<div class="cart-main-container">
 		<div class="list-header">
 			<div class="list-title">
@@ -151,7 +152,7 @@
 								<div class="user-data-value">{{this.email}}</div>
 							</div>
 							<div class="user-data-item">
-								<div class="user-data-title">Role</div>
+								<div class="user-data-title">Rol</div>
 								<div class="user-data-value">
 									<i class="fas fa-edit"></i>
 

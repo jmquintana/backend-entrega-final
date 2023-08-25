@@ -63,7 +63,7 @@ app.use(addLogger);
 // Database connection
 database.connect().then(() => {
 	app.listen(PORT, (req, res) => {
-		console.log(`Server listening on port ${PORT}`);
+		console.log(`Listening. http://localhost:${PORT}`);
 	});
 });
 

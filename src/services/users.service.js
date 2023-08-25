@@ -161,4 +161,14 @@ export default class UserService {
 			return error;
 		}
 	};
+
+	updateUserRole = async (id, user) => {
+		try {
+			const response = await usersRepository.updateUserRole(id, user);
+			return response;
+		} catch (error) {
+			console.log();
+			return null;
+		}
+	};
 }
