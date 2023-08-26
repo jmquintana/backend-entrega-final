@@ -41,13 +41,16 @@ const initializePassport = () => {
 					const { first_name, last_name, email, age, role } = req.body;
 					let user = await usersModel.findOne({ email: username });
 					if (user) {
-						console.log("User already exists");
-						return done(null, false);
+						return done(null, {
+							ok: false,
+							status: "Error",
+							message: "User already exists",
+							data: {},
+						});
 					}
 
 					const cart = await cartsService.addCart({ products: [] });
 					const cartId = cart._id;
-					console.log("passport linea 32", { cartId });
 
 					const newUser = {
 						first_name,
@@ -61,9 +64,19 @@ const initializePassport = () => {
 
 					let result = await usersModel.create(newUser);
 
-					return done(null, result);
+					return done(null, {
+						ok: true,
+						status: "Success",
+						message: "User created successfully",
+						data: result,
+					});
 				} catch (error) {
-					return done("Error when trying to find user:" + error);
+					return done({
+						ok: false,
+						status: "Error",
+						message: "Error creating user",
+						error: `${error}`,
+					});
 				}
 			}
 		)

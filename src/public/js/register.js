@@ -16,13 +16,18 @@ form.addEventListener("submit", async (e) => {
 			header: {
 				"Content-Type": "application/json",
 			},
-		}).then((response) => {
-			if (response.status === 200) {
-				window.location.href = "/login";
-			} else {
-				alert("Something went wrong");
-			}
-		});
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.ok) {
+					showAlert(data.message, "success");
+					setTimeout(() => {
+						location.href = "/login";
+					}, 1500);
+				} else {
+					showAlert(data.message, "error");
+				}
+			});
 	} catch (error) {
 		console.error(error);
 	}

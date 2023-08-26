@@ -9,16 +9,27 @@ const {
 
 export const register = async (req, res) => {
 	try {
-		return res.send({ status: "Success", message: "user registered" });
+		const response = req.user;
+		return res.send(response);
 	} catch (error) {
-		console.log(error);
+		return res.status(500).send({
+			ok: false,
+			status: "Error",
+			message: "Failed to register user",
+			error: `${error}`,
+		});
 	}
 };
 
 export const failRegister = async (req, res) => {
 	try {
 		console.log("Failed Register");
-		return res.send({ status: "Error", error: "authentication error" });
+		return res.send({
+			ok: false,
+			status: "Error",
+			message: "Failed to register user",
+			error: "authentication error",
+		});
 	} catch (error) {
 		console.log(error);
 	}
